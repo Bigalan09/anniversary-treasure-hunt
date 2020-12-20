@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "Anniversary Treasure Hunt",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

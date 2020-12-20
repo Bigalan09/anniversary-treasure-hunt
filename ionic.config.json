@@ -1,0 +1,8 @@
+{
+  "name": "Anniversary Treasure Hunt",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "eb2b354e"
+}
