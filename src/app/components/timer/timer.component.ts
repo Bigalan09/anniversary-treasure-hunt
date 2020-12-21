@@ -1,4 +1,4 @@
-import { CompileTemplateMetadata } from '@angular/compiler';
+import * as moment from 'moment'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./timer.component.scss'],
 })
 export class TimerComponent implements OnInit {
-  @Output() onComplete: EventEmitter<any> = new EventEmitter();
+  @Output() onComplete: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() anniversary: string;
 
   days: number;
@@ -15,27 +15,27 @@ export class TimerComponent implements OnInit {
   minutes: number;
   seconds: number;
   timer: any;
-  anniversaryDate: Date;
+  anniversaryDate: moment.Moment;
 
   constructor() { }
 
   ngOnInit() {
-    this.anniversaryDate = new Date(this.anniversary);
     this.run();
     this.timer = setInterval(() => { this.run(); }, 1000);
   }
 
-  calculateDiff(dateSent) {
-    let currentDate = new Date();
-    dateSent = new Date(dateSent);
-
-    return Math.floor(Date.UTC(dateSent.getFullYear(), dateSent.getMonth(), dateSent.getDate()) - (Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())) / (100000 * 60));
+  calculateDiff(eventDate: moment.Moment) {
+    const now = moment();
+    const diff = eventDate.diff(now);
+    return moment.duration(diff, 'milliseconds');
   }
 
   run() {
+    this.anniversaryDate = moment(this.anniversary);
+
     if (!this.isAnniversary()) {
-      console.log(this.calculateDiff(this.anniversary));
-      this.updateTimer(this.calculateDiff(this.anniversary));
+      const duration = this.calculateDiff(this.anniversaryDate);
+      this.updateTimer(duration);
     } else {
       this.complete();
     }
@@ -43,16 +43,14 @@ export class TimerComponent implements OnInit {
 
   complete() {
     clearInterval(this.timer);
-    this.onComplete.emit();
+    this.onComplete.emit(true);
   }
 
   updateTimer(diff) {
-    this.days = Math.floor(diff / 86400);
-    const remainingDays = diff - (this.days * 86400);
-    this.hours = Math.floor(remainingDays / 3600);
-    const remainingHours = remainingDays - (this.hours * 3600);
-    this.minutes = Math.floor(remainingHours / 60);
-    this.seconds = diff % 60;
+    this.days = diff.days();
+    this.hours = diff.hours();
+    this.minutes = diff.minutes();
+    this.seconds = diff.seconds();
 
     if (diff <= 0) {
       this.complete();
@@ -60,7 +58,7 @@ export class TimerComponent implements OnInit {
   }
 
   isAnniversary() {
-    return new Date() >= this.anniversaryDate;
+    return moment() >= this.anniversaryDate;
   }
 
 }
