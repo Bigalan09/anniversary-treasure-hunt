@@ -15,16 +15,21 @@
   <ion-card [hidden]="!countdownComplete">
     <ion-card-header>
       <ion-card-title>Clue #1</ion-card-title>
-      <ion-card-subtitle>A place where water falls down like rain, after it falls on you it goes down the drain.
+      <ion-card-subtitle>All shining and silver, 
+        With a beautiful face, 
+        You look into me, 
+        And find this place.
       </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
   <ion-card [hidden]="!countdownComplete">
     <ion-card-header>
-      <ion-card-subtitle>Enter the final answer to the clues below.</ion-card-subtitle>
+      <ion-card-title>Cryptogram</ion-card-title>
+      <ion-card-subtitle>Find the clues to help solve the cryptogram.</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
+      <strong>2 11 2 1</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>11 23 8 13 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>24 23 12</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>9 23 16 13</strong>
       <form (ngSubmit)="send(form)">
         <ion-label *ngIf="error && error.length > 0">{{error}}</ion-label>
         <ion-grid>

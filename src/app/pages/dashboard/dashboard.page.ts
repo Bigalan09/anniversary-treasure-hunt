@@ -45,7 +45,7 @@ export class DashboardPage implements OnInit {
   }
 
   async send() {
-    if (this.answer.toLowerCase() === "boob") {
+    if (this.answer.toLowerCase().replace(/\s/g,'') === "alanlovesyoumore") {
       this.error = undefined;
       this.router.navigate(['/complete']);
     } else {
