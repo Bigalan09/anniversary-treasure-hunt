@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { TimerComponent } from 'src/app/components/timer/timer.component';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @NgModule({
   imports: [
@@ -17,5 +18,6 @@ import { TimerComponent } from 'src/app/components/timer/timer.component';
     DashboardPageRoutingModule,
   ],
   declarations: [DashboardPage, TimerComponent],
+  providers: [LocalNotifications],
 })
-export class DashboardPageModule {}
+export class DashboardPageModule { }

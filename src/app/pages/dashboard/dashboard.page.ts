@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import { Router } from '@angular/router';
+import { Plugins } from '@capacitor/core';
+const { LocalNotifications } = Plugins;
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +14,30 @@ export class DashboardPage implements OnInit {
   answer: string;
   error: string;
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
-    this.anniversary = "2020-12-30 08:00:00";
+    this.anniversary = "2020-12-30 08:30:00";
+    this.scheduleNotification();
+  }
+
+  async scheduleNotification() {
+    await LocalNotifications.requestPermission();
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: "Anniversary Treasure Hunt",
+          body: "It\'s Time! Your quest for treasure has begin!",
+          id: 1,
+          schedule: { at: new Date(this.anniversary) },
+          sound: null,
+          attachments: null,
+          actionTypeId: "",
+          extra: null
+        }
+      ]
+    });
   }
 
   onCountdownComplete(complete: boolean) {
@@ -25,7 +47,7 @@ export class DashboardPage implements OnInit {
   async send() {
     if (this.answer.toLowerCase() === "boob") {
       this.error = undefined;
-      window.open("https://www.google.com/maps/search/?api=1&query=51.4039039,-3.5592016")
+      this.router.navigate(['/complete']);
     } else {
       this.error = "Invalid - Try again.";
     }
