@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import * as moment from 'moment';
 const { LocalNotifications } = Plugins;
 
 @Component({
@@ -12,14 +13,31 @@ export class DashboardPage implements OnInit {
   countdownComplete: boolean = false;
   anniversary: string;
   answer: string;
-  error: string;
+  error: string = "";
+  secondaryTimerComplete: boolean = true;
+  secondary: string;
 
   constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.anniversary = "2020-12-30 08:30:00";
+    this.anniversary = "2020-12-30 10:00:00";
+    this.secondary = "2020-12-30 05:00:00";
     this.scheduleNotification();
+    this.doTimer();
+  }
+
+  doTimer() {
+    const now = moment();
+    const diff = moment(this.secondary).diff(now);
+    const duration: any = moment.duration(diff, 'milliseconds')
+    this.secondaryTimerComplete = duration <= 0;
+
+    if (!this.secondaryTimerComplete) {
+      setTimeout(() => {
+        this.doTimer();
+      }, 1000);
+    }
   }
 
   async scheduleNotification() {
@@ -45,9 +63,9 @@ export class DashboardPage implements OnInit {
   }
 
   async send() {
-    if (this.answer.toLowerCase().replace(/\s/g,'') === "alanlovesyoumore") {
+    if (this.answer.toLowerCase().replace(/\s/g, '') === "sophie") {
       this.error = undefined;
-      this.router.navigate(['/complete']);
+      this.router.navigate(['/boss']);
     } else {
       this.error = "Invalid - Try again.";
     }

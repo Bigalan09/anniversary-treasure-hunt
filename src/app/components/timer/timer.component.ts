@@ -1,4 +1,4 @@
-import * as moment from 'moment'
+import * as moment from 'moment';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -21,7 +21,7 @@ export class TimerComponent implements OnInit {
 
   ngOnInit() {
     this.run();
-    this.timer = setInterval(() => { this.run(); }, 1000);
+    this.timer = setTimeout(() => { this.run(); }, 1001);
   }
 
   calculateDiff(eventDate: moment.Moment) {
@@ -42,7 +42,7 @@ export class TimerComponent implements OnInit {
   }
 
   complete() {
-    clearInterval(this.timer);
+    clearTimeout(this.timer);
     this.onComplete.emit(true);
   }
 
@@ -51,9 +51,11 @@ export class TimerComponent implements OnInit {
     this.hours = diff.hours();
     this.minutes = diff.minutes();
     this.seconds = diff.seconds();
-
+    
     if (diff <= 0) {
       this.complete();
+    } else {
+      this.timer = setTimeout(() => { this.run(); }, 1001);
     }
   }
 

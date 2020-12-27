@@ -11,27 +11,38 @@
   </div>
   <app-timer [hidden]="countdownComplete" anniversary="{{anniversary}}" (onComplete)="onCountdownComplete($event)">
   </app-timer>
-
+  <br />
+  <div class="description" [hidden]="countdownComplete">
+    All will be revealed once the timer has ended.<br /><strong>SO STOP ASKING QUESTIONS!</strong>
+  </div>
+  <div class="description" [hidden]="!secondaryTimerComplete || countdownComplete">
+    Make sure you've showered and had breakfast before 10am!
+  </div>
+  
   <ion-card [hidden]="!countdownComplete">
     <ion-card-header>
       <ion-card-title>Clue #1</ion-card-title>
-      <ion-card-subtitle>All shining and silver, 
-        With a beautiful face, 
-        You look into me, 
+      <ion-card-subtitle>All shining and silver,
+        With a beautiful face,
+        You look into me,
         And find this place.
       </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
+  <div class="description" [hidden]="!countdownComplete">
+    <hr />
+  </div>
   <ion-card [hidden]="!countdownComplete">
     <ion-card-header>
       <ion-card-title>Cryptogram</ion-card-title>
-      <ion-card-subtitle>Find the clues to help solve the cryptogram.</ion-card-subtitle>
+      <ion-card-subtitle>Find all the clues to help solve the cryptogram puzzle.</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      <strong>2 11 2 1</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>11 23 8 13 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>24 23 12</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>9 23 16 13</strong>
+      <strong>10 17 23</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>18 23 13 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2 11 2 1</strong><br />
+      <strong>11 23 8 13</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>5 17 13</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>9 23 21 5</strong>?
       <form (ngSubmit)="send(form)">
-        <ion-label *ngIf="error && error.length > 0">{{error}}</ion-label>
+        <ion-label *ngIf="error && error.length > 0" color="danger">{{error}}</ion-label>
         <ion-grid>
           <ion-row>
             <ion-col size="9">

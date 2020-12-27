@@ -6,6 +6,10 @@ const routes: Routes = [
     path: 'complete',
     loadChildren: () => import('./pages/complete/complete.module').then( m => m.CompletePageModule)
   },
+  {
+    path: 'boss',
+    loadChildren: () => import('./pages/boss/boss.module').then( m => m.BossPageModule)
+  },
 
 ];
 @NgModule({
