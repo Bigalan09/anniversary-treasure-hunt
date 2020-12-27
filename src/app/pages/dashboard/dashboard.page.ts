@@ -49,7 +49,21 @@ export class DashboardPage implements OnInit {
           body: "It\'s Time! Your quest for treasure has begin!",
           id: 1,
           schedule: { at: new Date(this.anniversary) },
-          sound: null,
+          sound: "beep.wav",
+          attachments: null,
+          actionTypeId: "",
+          extra: null
+        }
+      ]
+    });
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: "Anniversary Treasure Hunt",
+          body: "It\'s almost time for the quest!",
+          id: 2,
+          schedule: { at: new Date(this.secondary) },
+          sound: "beep.wav",
           attachments: null,
           actionTypeId: "",
           extra: null
