@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import { AlertController } from '@ionic/angular';
 import * as moment from 'moment';
 const { LocalNotifications } = Plugins;
 
@@ -12,17 +13,28 @@ const { LocalNotifications } = Plugins;
 export class DashboardPage implements OnInit {
   countdownComplete: boolean = false;
   anniversary: string;
+  anniversary2: string;
   answer: string;
   error: string = "";
   secondaryTimerComplete: boolean = true;
   secondary: string;
+  timeUp: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private alertController: AlertController) {
   }
 
   ngOnInit() {
-    this.anniversary = "2020-12-30 10:00:00";
-    this.secondary = "2020-12-30 05:00:00";
+    let anniversaryDate = moment("2020-12-30 09:45:00");
+
+    this.secondary = anniversaryDate.clone().add('-3', 'hours').format("YYYY-MM-DD HH:mm:ss");
+    this.anniversary = anniversaryDate.clone().format("YYYY-MM-DD HH:mm:ss");
+    let anniversary2 = anniversaryDate.clone().add('1', 'hour').add('30', 'minutes');
+    this.anniversary2 = anniversary2.format("YYYY-MM-DD HH:mm:ss");
+
+    if (anniversary2 <= moment()) {
+      this.onTimesUp(true);
+    }
+
     this.scheduleNotification();
     this.doTimer();
   }
@@ -37,6 +49,26 @@ export class DashboardPage implements OnInit {
       setTimeout(() => {
         this.doTimer();
       }, 1000);
+    }
+  }
+
+  async onTimesUp(complete: boolean) {
+    if (complete) {
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Time up!',
+        message: 'I\'ll let you continue, but as a forfeit you will be having anal without lube!',
+        buttons: [
+          {
+            text: 'Okay',
+            handler: (blah) => {
+              this.timeUp = true;
+            }
+          }
+        ]
+      });
+
+      await alert.present();
     }
   }
 

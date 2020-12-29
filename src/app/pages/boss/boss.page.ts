@@ -21,7 +21,7 @@ export class BossPage implements OnInit {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Declaration',
-        message: 'By clicking "Agree", you ("Sophie Olley"), agree that Alan wil be and is Boss #1 forever.',
+        message: 'By clicking "Agree", you ("Sophie Olley"), agree that I ("Alan Gardner") is and will always be boss number 1.',
         buttons: [
           {
             text: 'Agree',

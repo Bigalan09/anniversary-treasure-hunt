@@ -16,9 +16,16 @@
     All will be revealed once the timer has ended.<br /><strong>SO STOP ASKING QUESTIONS!</strong>
   </div>
   <div class="description" [hidden]="!secondaryTimerComplete || countdownComplete">
-    Make sure you've showered and had breakfast before 10am!
+    Make sure you've showered and had breakfast before 9:30am!
   </div>
-  
+  <ion-card [hidden]="!countdownComplete || timeUp">
+    <ion-card-header>
+      <ion-card-title>You're being timed...</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-timer anniversary="{{anniversary2}}" (onComplete)="onTimesUp($event)"></app-timer>
+    </ion-card-content>
+  </ion-card>
   <ion-card [hidden]="!countdownComplete">
     <ion-card-header>
       <ion-card-title>Clue #1</ion-card-title>
@@ -39,8 +46,14 @@
     </ion-card-header>
 
     <ion-card-content>
-      <strong>10 17 23</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>18 23 13 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>2 11 2 1</strong><br />
-      <strong>11 23 8 13</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>5 17 13</strong>&nbsp;&nbsp;&nbsp;&nbsp;<strong>9 23 21 5</strong>?
+      <div [hidden]="!timeUp"><strong>Who's Alan's forever and ever?</strong></div>
+      <div [hidden]="timeUp">
+        <strong>10 17 23 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>2 11 2 1 21</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>7 23 16 13 8 13 16</strong><br />
+        <strong>2 1 18</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>13 8 13 16</strong>?
+      </div>
       <form (ngSubmit)="send(form)">
         <ion-label *ngIf="error && error.length > 0" color="danger">{{error}}</ion-label>
         <ion-grid>
